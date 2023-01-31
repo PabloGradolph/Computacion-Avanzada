@@ -6,7 +6,7 @@
 import matplotlib.pyplot as plt
 import numpy as np # Importamos numpy como el alias np
 a = np.linspace(0,20,50)
-b= np.sin(a)
+b = np.sin(a)
 plt.plot(a, b, 'k--', linewidth = 2) 
 plt.show()
 '''
@@ -23,10 +23,10 @@ micaja.color=color.red
 t=0
 dt=0.01
 while True:
- rate(100) # el lazose ejecuta a esterate por segundo, en un segundo se pasa de t=0 a t=1(vuelta en 2pi segundos)
- micaja.axis=vec(2*sin(t),2*cos(t),0)
- micaja.color=vec(sin(2*t)*sin(t),sin(2*t)*cos(t),cos(2*t))
- t=t+dt
+    rate(100) # el lazose ejecuta a esterate por segundo, en un segundo se pasa de t=0 a t=1(vuelta en 2pi segundos)
+    micaja.axis=vec(2*sin(t),2*cos(t),0)
+    micaja.color=vec(sin(2*t)*sin(t),sin(2*t)*cos(t),cos(2*t))
+    t=t+dt
  '''
 
 ###
