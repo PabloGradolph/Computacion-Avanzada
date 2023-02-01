@@ -1,2 +1,2 @@
 # Ignoramos el entorno que incluye los paquetes numpy matplotlib y vpython
-MiEntorno
+/MiEntorno
