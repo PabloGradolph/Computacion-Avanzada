@@ -4,7 +4,7 @@
 
 📊 Repositorio de la asignatura de computación Avanzada. Asignatura optativa del grado en física de la Universidad Autónoma de Madrid. En esta asignatura se resuelven problemas del cálculo numérico aplicables a la física (de un nivel superior a los problemas planteados en computación II) mediante códigos en el lenguaje de programación Python.<br>
 
-🥼 Más información de la asignatura: <a href="Guía Docente. Computación Avanzada.pdf">Guía Docente Computación Avanzada</a>
+🥼 Más información de la asignatura: <a href="Guía Docente. Computación Avanzada.pdf">Guía Docente Computación Avanzada</a><br><br>
 
 [![Python](https://img.shields.io/badge/python-3.10.7-yellow?style=for-the-badge&logo=python&logoColor=white&labelColor=101010)]()
 
