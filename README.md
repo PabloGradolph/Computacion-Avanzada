@@ -6,8 +6,6 @@
 
 🥼 Más información de la asignatura: <a href="Guía Docente. Computación Avanzada.pdf">Guía Docente Computación Avanzada</a>
 
-🔢 El cálculo numérico se utiliza ampliamente en la ciencia de la computación para calcular resultados mediante un algoritmo en lugar de una solución matemática exacta. Esta técnica se usa principalmente para la modelación y la simulación, ya que permite la ejecución de códigos de computadora para calcular resultados aproximados. El cálculo numérico se usa ampliamente para aplicaciones como el análisis de datos, la optimización, la predicción de resultados, la toma de decisiones y la solución de problemas científicos.<br>
-
 [![Python](https://img.shields.io/badge/python-3.10.7-yellow?style=for-the-badge&logo=python&logoColor=white&labelColor=101010)]()
 
 Python es un lenguaje de programación interpretado, multiplataforma y de código abierto. Python se caracteriza por su sintaxis limpia y su lectura legible. Está destinado a ser un lenguaje de programación de alto nivel, ideal para desarrollar aplicaciones con facilidad. Python también es flexible y permite la programación orientada a objetos, la programación funcional y la programación procedural. El lenguaje admite la creación de módulos y paquetes que permiten la reutilización de código. Python es uno de los lenguajes de programación más populares del mundo, utilizado por miles de desarrolladores y compañías en todo el mundo. Es un lenguaje versátil que se puede utilizar para desarrollar aplicaciones web, software desktop, juegos, inteligencia artificial, ciencia de datos, etc. 
