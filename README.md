@@ -25,7 +25,7 @@ Python es un lenguaje de programación interpretado, multiplataforma y de códig
 
 <h3 align="center">Bloque 2: Resolución de algunos problemas numéricos con Python</h3>
 
-- 2.1 Integración y de3rivación numérica.
+- 2.1 Integración y derivación numérica.
 - 2.2 Solución numérica de ecuaciones y sistemas.
 - 2.3 Ecuaciones diferencials con condiciones iniciales.
 - 2.4 Ecuaciones diferenciales con condiciones en la fotnera (o de contorno).
