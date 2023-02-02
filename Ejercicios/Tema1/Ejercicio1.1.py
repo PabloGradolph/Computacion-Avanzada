@@ -16,9 +16,9 @@ theta = float(input("Introduzca la coordenada theta (en grados): "))
 theta = theta * (2*pi/360)
 
 # Convertimos a coordenadas cartesianas e imprimimos los resultados por pantalla.
-# X = r sin(theta) e Y = r cos(theta)
-x = r * sin(theta)
-y = r * cos(theta)
+# X = r cos(theta) e Y = r sin(theta)
+x = r * cos(theta)
+y = r * sin(theta)
 print(f"Las coordenadas cartesianas son: ({x}, {y})")
 
 
