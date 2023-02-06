@@ -1,3 +1,7 @@
+#------------------------------------
+# Clase del 2 de febrero de 2023
+#------------------------------------
+
 a=7
 b=a.bit_length()
 print('a:',a,'  Número de bits:',b)
@@ -13,6 +17,18 @@ print('x:', x, '¿Entero?', m)
 x=3.1
 m=x.is_integer()
 print('x:', x, '¿Entero?', m)
+
+#------------------------------------
+
+lista = [1,3.0,"Hola"]
+lista2 = [True, 4+2j]
+print(lista + lista2)
+print((lista + lista2)*3)
+lista = 20*[0]
+print(lista)
+lista3 = lista + lista2
+print(lista3)
+
 
 #------------------------------------
 
@@ -67,21 +83,3 @@ print('Para operaciones más sencillas, como multiplicar por 2, es necesario')
 print('usar una sintaxis con una función implícita conocida como "lambda":')
 L5=list(map(lambda x: 2*x, L3))
 print(L5)
-
-#------------------------------------
-
-import numpy as np
-from math import *
-
-print('Raíz cuadrada de 3 con la función sqrt del paquete math:',sqrt(3))
-print('Raíz cuadrada de 3 con la función sqrt del paquete numpy:',np.sqrt(3))
-
-#------------------------------------
-
-import numpy as np
-a=[1, 2, 3, 4, 5]
-b=np.array(a, dtype=int)
-print('lista:',a)
-print('array:',b)
-b=np.array(a, float)
-print('array con valores reales:',b)
