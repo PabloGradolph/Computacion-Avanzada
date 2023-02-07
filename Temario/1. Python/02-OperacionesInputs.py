@@ -1,5 +1,7 @@
 #------------------------------------
 # Clase del 1 de febrero de 2023
+# Autor: Pablo Gradolph Oliva
+# Contenido: Inputs y operaciones en Python
 #------------------------------------
 
 a=3

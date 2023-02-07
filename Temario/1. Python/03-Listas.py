@@ -1,5 +1,7 @@
 #------------------------------------
 # Clase del 2 de febrero de 2023
+# Autor: Pablo Gradolph Oliva
+# Contenido: Listas en Python
 #------------------------------------
 
 a=7

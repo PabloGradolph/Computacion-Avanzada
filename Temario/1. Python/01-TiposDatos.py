@@ -1,5 +1,7 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - 
-# Clase 31 de enero de 2023
+# Clase 31 de enero de 2023.
+# Autor: Pablo Gradolph Oliva
+# Contenido: Tipos de datos en Python
 # - - - - - - - - - - - - - - - - - - - - - - - - 
 
 # Esto es un comentario

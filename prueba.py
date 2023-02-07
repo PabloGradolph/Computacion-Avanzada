@@ -1,21 +1,22 @@
+#In[0]
+
 ###
 # Prueba de matplotlib y numpy
 ###
 
-'''
 import matplotlib.pyplot as plt
 import numpy as np # Importamos numpy como el alias np
 a = np.linspace(0,20,50)
 b = np.sin(a)
 plt.plot(a, b, 'k--', linewidth = 2) 
 plt.show()
-'''
+
+#In[1]
 
 ###
 # Prueba pequeña de vpython
 ###
 
-'''
 from vpython import * ## importa libreria vpython con clases de objetos graficos y funciones matematicas
 scene2=canvas(background=color.white) ## lienzo, escena
 micaja=box(axis=vec(0,2,0))
@@ -27,13 +28,13 @@ while True:
     micaja.axis=vec(2*sin(t),2*cos(t),0)
     micaja.color=vec(sin(2*t)*sin(t),sin(2*t)*cos(t),cos(2*t))
     t=t+dt
- '''
+
+#In[2]
 
 ###
 # Prueba grande de vpython
 ###
 
-'''
 from vpython import * # Cargamos las Librerias de VPython que incluyen Clases de Objetos Graficos, y funciones Matemáticas
 canvas() # Creamos una escena (se crea una por default en glowscript)
 #GlowScript 3.0 VPython ( para uso en glowscript en lugar de la importación de arriba)
@@ -84,7 +85,7 @@ while True: # Lazo de iteración sin salida ( Mientras Verdadero haga:), notar l
 
 # fig.plot( t, m1*rho*rho*phi_dot )
  t+=dt ## asignacion del nuevo tiempo t=t+dt
-'''
+
 
 
 

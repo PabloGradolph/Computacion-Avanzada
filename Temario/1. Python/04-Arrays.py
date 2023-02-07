@@ -1,5 +1,7 @@
 #------------------------------------
 # Clase del 6 de febrero de 2023
+# Autor: Pablo Gradolph Oliva
+# Contenido: Arrays en Python (uso de numpy)
 #------------------------------------
 
 #In[0]
@@ -75,6 +77,7 @@ a2=np.array([3, 6, 9, 12], int)
 
 print('Array 1:',a1)
 print('Array 2:',a2)
+print('Producto de un array por un número: ', a1*5)
 print('Suma de dos arrays:',a1+a2)
 print('Producto de dos arrays:',a1*a2)
 print('Producto del array 1 por pi:', a1*np.pi)
