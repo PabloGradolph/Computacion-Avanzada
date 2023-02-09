@@ -1,8 +1,7 @@
 #------------------------------------
 # Clase del 8 de febrero de 2023
 # Autor: Pablo Gradolph Oliva
-# Contenido: Funciones y comienzo de representación gráfica con Python
-# (uso de matplotlib)
+# Contenido: Funciones con Python
 #------------------------------------
 
 #In[0]
