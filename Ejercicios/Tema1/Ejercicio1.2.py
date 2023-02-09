@@ -7,7 +7,7 @@
 
 from math import *
 
-def transformacion(coordenadas: tuple) -> tuple:
+def transformacion(coordenadas: tuple) -> tuple and float:
     # Guardamos las coordenadas polares
     r = coordenadas[0]
     theta = coordenadas[1]
@@ -26,7 +26,7 @@ def main():
     # Probamos con el ejemplo del enunciado
     coordenadas = (1,pi/4,2)
     cartesianas, distancia = transformacion(coordenadas)
-    print(f"Las coordenadas cartesianas son {cartesianas} y la distancia al origen es {distancia} u^2")
+    print(f"Las coordenadas cartesianas son {cartesianas} y la distancia al origen es {distancia} unidades.")
 
 if __name__ == "__main__":
     main()
