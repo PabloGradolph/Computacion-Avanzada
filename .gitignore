@@ -1,2 +1,8 @@
 # Ignoramos el entorno que incluye los paquetes numpy matplotlib y vpython
 /MiEntorno
+
+# Ignora el .vscode para poder ejecutar C++
+.vscode
+
+# Ignora .exe
+*.exe
