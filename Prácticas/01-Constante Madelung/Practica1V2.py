@@ -1,21 +1,18 @@
 from math import sqrt, fabs
 from timeit import default_timer
+from itertools import product
+import numpy as np
 
 def constante_madelung(L: float) -> float:
     # Del enunciado sacamos la fórmula para M que procedemos a programar.
     # Primero inicializamos en cero la constante.
     M = 0
+    bucle = list(product(np.arange(-L, L+1),repeat=3))
+    bucle.remove((0,0,0)) # Evitamos dividir por cero
 
-    # Tres bucles para las 3 coordenadas.
-    for i in range(-L, L+1):
-        for j in range(-L, L+1):
-            for k in range(-L, L+1):
-                
-                # Evitamos dividir por cero
-                if i == 0 and j == 0 and k == 0:
-                    continue
-                else:
-                    M += (1/sqrt(i**2 + j**2 + k**2)) if (i+j+k)%2 == 0 else -(1/sqrt(i**2 + j**2 + k**2))
+    for h in bucle:
+        i,j,k = h[0],h[1],h[2]   
+        M += (1/sqrt(i*i + j*j + k*k)) if (i+j+k)%2 == 0 else -(1/sqrt(i*i + j*j + k*k))
     
     return M
 
@@ -50,7 +47,8 @@ def main():
     print(f"Para L = 200 --> M = {Mobtenida}; Error absoluto = {Ea}; Error relativo = {Er}%")
 
     fin = default_timer()
-    print(f"Tiempo de ejecución del programa (s) = {fin - inicio}")
+    print()
+    print(f"* Tiempo de ejecución del programa (s) = {fin - inicio}")
 
 if __name__ == "__main__":
     main()

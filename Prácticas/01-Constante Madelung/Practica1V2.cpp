@@ -1,5 +1,6 @@
 #include <iostream>
 #include <math.h>
+#include <iomanip>
 using namespace std;
 
 #include <chrono>
@@ -37,44 +38,25 @@ void errores(double exacto, double obtenido, double &Ea, double &Er){
 }
 
 int main(){
+    cout<<setprecision(10);
+
     // Medimos el tiempo de ejecución
     time_point<system_clock> start, end;
     duration<double> elapsed_seconds;
     start = system_clock::now();
 
-    double Mexacta = -1.74756, Mobtenida = 0., Ea = 0., Er = 0.;
+    double Mexacta = -1.74756, Mobtenida = 0., Ea = 0., Er = 0., tol = 10e-4;
+    int L = 100;
 
     // Para L = 20
-    Mobtenida = constanteMadelung(20);
-    errores(Mexacta, Mobtenida, Ea, Er);
-    cout<<"Para L = 20 --> M = "<<Mobtenida<<"; Error absoluto = "<<Ea<<"; Error relativo = "<<Er<<"%"<<endl;
+    do {
+        Mobtenida = constanteMadelung(L);
+        errores(Mexacta, Mobtenida, Ea, Er);
+        cout<<"Para L = "<<L<<" --> M = "<<Mobtenida<<"; Error absoluto = "<<Ea<<"; Error relativo = "<<Er<<"%"<<endl;
+        L = L + 100;
+    } while (fabs(Ea)>tol);
 
-    // Para L = 50
-    Mobtenida = constanteMadelung(50);
-    errores(Mexacta, Mobtenida, Ea, Er);
-    cout<<"Para L = 50 --> M = "<<Mobtenida<<"; Error absoluto = "<<Ea<<"; Error relativo = "<<Er<<"%"<<endl;
-
-    // Para L = 100
-    Mobtenida = constanteMadelung(100);
-    errores(Mexacta, Mobtenida, Ea, Er);
-    cout<<"Para L = 100 --> M = "<<Mobtenida<<"; Error absoluto = "<<Ea<<"; Error relativo = "<<Er<<"%"<<endl;
-
-    // Para L = 200
-    Mobtenida = constanteMadelung(200);
-    errores(Mexacta, Mobtenida, Ea, Er);
-    cout<<"Para L = 200 --> M = "<<Mobtenida<<"; Error absoluto = "<<Ea<<"; Error relativo = "<<Er<<"%"<<endl;
-
-    /*
-    // Para L = 300
-    Mobtenida = constanteMadelung(300);
-    errores(Mexacta, Mobtenida, Ea, Er);
-    cout<<"Para L = 300 --> M = "<<Mobtenida<<"; Error absoluto = "<<Ea<<"; Error relativo = "<<Er<<"%"<<endl;
-
-    // Para L = 500
-    Mobtenida = constanteMadelung(500);
-    errores(Mexacta, Mobtenida, Ea, Er);
-    cout<<"Para L = 500 --> M = "<<Mobtenida<<"; Error absoluto = "<<Ea<<"; Error relativo = "<<Er<<"%"<<endl;
-    */
+    cout<<"Tolerancia alcanzada para un L = "<<L-100<<endl<<endl;
 
     // Terminamos de medir el tiempo de ejecución.
     end = system_clock::now();
@@ -83,4 +65,3 @@ int main(){
 
     return 0;
 }
-
