@@ -6,3 +6,9 @@
 
 # Ignora .exe
 *.exe
+
+# Ignora .zip
+*.zip
+
+# Ignora word
+*.docx

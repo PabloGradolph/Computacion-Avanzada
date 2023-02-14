@@ -1,3 +1,5 @@
+-	-1 elevado a i+j+k
+-	Mirar si la convergencia es rápida o lenta.
 -	Versión 1.0: Resultados obtenidos con ambos programas.
 -	Comentar la diferencia en los tiempos de ejecución.
 -	Debido a esto se realiza la versión 2.0:
