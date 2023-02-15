@@ -29,25 +29,10 @@ def main():
     inicio = default_timer()
     Mexacta = -1.74756
 
-    # Para L = 20
-    Mobtenida = constante_madelung(20)
-    Ea, Er = errores(Mexacta, Mobtenida)
-    print(f"Para L = 20 --> M = {Mobtenida}; Error absoluto = {Ea}; Error relativo = {Er}%")
-
-    # Para L = 50
-    Mobtenida = constante_madelung(50)
-    Ea, Er = errores(Mexacta, Mobtenida)
-    print(f"Para L = 50 --> M = {Mobtenida}; Error absoluto = {Ea}; Error relativo = {Er}%")
-
-    # Para L = 100
-    Mobtenida = constante_madelung(100)
-    Ea, Er = errores(Mexacta, Mobtenida)
-    print(f"Para L = 100 --> M = {Mobtenida}; Error absoluto = {Ea}; Error relativo = {Er}%")
-
-    # Para L = 200
-    Mobtenida = constante_madelung(200)
-    Ea, Er = errores(Mexacta, Mobtenida)
-    print(f"Para L = 200 --> M = {Mobtenida}; Error absoluto = {Ea}; Error relativo = {Er}%")
+    for L in [20,50,100,200]:
+        Mobtenida = constante_madelung(L)
+        Ea, Er = errores(Mexacta, Mobtenida)
+        print(f"Para L = {L} --> M = {Mobtenida}; Error absoluto = {Ea}; Error relativo = {Er}%")
 
     fin = default_timer()
     print()

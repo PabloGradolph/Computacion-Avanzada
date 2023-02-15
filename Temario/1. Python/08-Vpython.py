@@ -37,3 +37,12 @@ s=vp.sphere()
 s.pos=vp.vector(2,-1,0)
 s.radius=0.3
 s.color=vp.vector(1,1,0)
+
+# In[2]
+
+import numpy as np
+import vpython as vp
+
+NombreArray = np.empty(10, vp.sphere)
+for n in range(10):
+    NombreArray[n] = vp.sphere(pos=vp.vector(0,n,0))

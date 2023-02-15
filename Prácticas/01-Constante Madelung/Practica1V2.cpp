@@ -45,7 +45,7 @@ int main(){
     duration<double> elapsed_seconds;
     start = system_clock::now();
 
-    double Mexacta = -1.74756, Mobtenida = 0., Ea = 0., Er = 0., tol = 10e-4;
+    double Mexacta = -1.74756, Mobtenida = 0., Ea = 0., Er = 0., tol = 10e-5;
     int L = 100;
 
     // Para L = 20
