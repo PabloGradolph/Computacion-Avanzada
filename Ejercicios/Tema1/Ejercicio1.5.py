@@ -1,4 +1,4 @@
-# Difuja la red cristalina del NaCl en 3 dimensiones con vpython.
+# Dibuja la red cristalina del NaCl en 3 dimensiones con vpython.
 
 import vpython as vp
 import numpy as np
@@ -36,3 +36,6 @@ for i in range(11):
                 atomos[i,j,k] = vp.sphere(pos=vp.vector(coor[0],coor[1],coor[2]), radius=radio_Na, color=vp.vector(1,1,1))
             contador += 1
             del coordenadas[0] # Borramos la coordenada que hemos cogido para poder coger la siguiente.
+
+while True:
+    vp.rate(60)
