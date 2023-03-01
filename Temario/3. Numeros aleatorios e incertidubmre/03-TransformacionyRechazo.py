@@ -14,7 +14,7 @@ from math import log
 import numpy as np
 import matplotlib.pyplot as plt
 
-n=100			# Número de valores
+n=1000			# Número de valores
 valores=[]		# Lista para guardalos
 valores_x=[]	# Guardamos también los valores uniformes
 
@@ -65,3 +65,31 @@ plt.ylim(0,1)
 plt.show()
 
 #======= Método del rehcazo ==========
+
+# Ejemplo completamente inventado para ver el funcionamiento del método.
+from random import *
+from math import exp
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Rango en el que quiero que estén mis números aleatorios.
+limite_inferior = -2
+limite_superior = 2
+
+def distro(y):
+	valor = exp(y)*2*y
+	return valor
+
+max_distro = 5
+n = 1000
+valores = []
+
+i = 0
+while i < n:
+	y = uniform(limite_inferior, limite_superior)
+	test = random() * max_distro # Multiplico por el máximo valor de la función distro(y)
+	if test<distro(y):
+		valores.append(y)
+		i+=1
+
+print(valores)
