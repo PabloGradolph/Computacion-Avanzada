@@ -73,7 +73,7 @@ def main():
     
     # Cambiamos el valor tau para el caso del 235U
     tau = 10e9
-    h = [5e5, 5e6, 5e7]
+    h = [tau/100000, tau/10000, tau/1000]
     for i in h:
         euler(i, t0, y0, tau)
     
@@ -106,7 +106,7 @@ def main():
     # Segunda parte del ejercicio:
 
     # Datos para tau = 10^9. Problema del 235U
-    h = [500000.00, 5000000.00, 50000000.00]
+    h = [100000.0, 1000000.0, 10000000.0]
     for i in range(1,4):
         h2 = str(h[i-1])
         data = np.loadtxt(f"Euler_tmin0.00_tau10000000000.0_h{h2}0_.txt", float, skiprows=2)
