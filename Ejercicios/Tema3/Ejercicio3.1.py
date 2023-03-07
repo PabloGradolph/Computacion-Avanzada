@@ -3,7 +3,7 @@
 
 #======= Apartado A ==========
 from random import random, uniform
-from math import exp, pi, sqrt
+from math import exp, pi, sqrt, fabs
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -27,10 +27,13 @@ valores=[]
 valores_x=[]
 
 for i in range(n):
-	x=random()
-	y=(2*x)**(1/3) # Ecuación tras aplicar el método de la transformación.
+	x=uniform(-(2**5/9)**(1/4),(2**5/9)**(1/4)) # Normalizada
+	y=(2*fabs(x))**(1/3) # Ecuación tras aplicar el método de la transformación.
 	valores_x.append(x)
-	valores.append(y)
+	if x>0:
+		valores.append(y)
+	else:
+		valores.append(-y)
 
 # Descomentar si se quieren ver los puntos generados.
 # plt.plot(valores_x, "o", markersize="3")
