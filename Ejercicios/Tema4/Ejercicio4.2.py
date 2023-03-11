@@ -1,4 +1,4 @@
-# Ecuaciones diferenciales de orden superior
+# Ecuaciones diferenciales de orden superior. Trayectoria de un proyectil.
 
 import numpy as np
 from math import *
@@ -49,7 +49,7 @@ def Euler_sistemas(dt: float, tmin: float, Y0: np.array, tol=10e-4) -> list:
 
     return x, y
 
-def RK4_sistemas(dt: float, tmin: float, Y0: np.array, tol=10e-4) -> list:
+def RK4_sistemas(dt: float, tmin: float, Y0: np.array) -> list:
     t = tmin
 
     # Inicializamos Y y las matrices K
@@ -100,7 +100,7 @@ def main():
         # Método Runge-Kutta 4º orden
         print(f"Runge-Kutta para un dt = {dt}")
         x2, y2 = RK4_sistemas(dt, tmin, Y0)
-        xfinal = (x2[-2] - (y2[-2]/y2[-1])*x2[-1])/(-(y2[-2]/y2[-1])+1)/1000
+        xfinal = (x2[-2] - (y2[-2]/y2[-1])*x2[-1])/(-(y2[-2]/y2[-1])+1)/1000 # Interpolación
         print(f"Sol = {xfinal:.7} --> Error relativo = {errores(sol_exacta, xfinal):.7}")
         x2 = np.array(x2)/1000
         y2 = np.array(y2)/1000
