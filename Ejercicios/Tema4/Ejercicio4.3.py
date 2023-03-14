@@ -46,8 +46,8 @@ def sistema_Yprima_conrozamiento(t: float, Y: np.array) -> np.array:
     Yprima = np.zeros((row,col),float)
     Yprima[0,0] = Y[2,0]
     Yprima[1,0] = Y[3,0]
-    Yprima[2,0] = - 4*10e-5*Y[2,0]*(sqrt(Y[2,0]**2 + Y[3,0]**2)) #dvx/dt = - B2*v*vx/m // v = sqrt(vx^2 + vy^2)
-    Yprima[3,0] = - g - 4*10e-5*Y[3,0]*(sqrt(Y[2,0]**2 + Y[3,0]**2)) #dvy/dt = -g - B2*v*vy/m
+    Yprima[2,0] = - 4e-5*Y[2,0]*(sqrt(Y[2,0]**2 + Y[3,0]**2)) #dvx/dt = - B2*v*vx/m // v = sqrt(vx^2 + vy^2)
+    Yprima[3,0] = - g - 4e-5*Y[3,0]*(sqrt(Y[2,0]**2 + Y[3,0]**2)) #dvy/dt = -g - B2*v*vy/m
 
     return Yprima
 
@@ -158,7 +158,7 @@ def main():
     print(f"Alcance máximo sin rozamiento:\nÁngulo = {alcance_max1[0]} grados --> Alcance = {alcance_max1[1]} km")
     
     alcance_max2 = max(alcances_conrozamiento.items(), key=obtener_valor)
-    print(f"Alcance máximo sin rozamiento:\nÁngulo = {alcance_max2[0]} grados --> Alcance = {alcance_max2[1]} km")
+    print(f"Alcance máximo con rozamiento:\nÁngulo = {alcance_max2[0]} grados --> Alcance = {alcance_max2[1]} km")
 
     # Gráficas sin rozamiento (intervalos de 1º).
     fig3 = plt.figure("Trayectoria del Proyectil.")
