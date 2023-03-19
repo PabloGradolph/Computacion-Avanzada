@@ -32,6 +32,8 @@ def sistema_Yprima_sinrozamiento(t: float, Y: np.array) -> np.array:
 # Devuelve la matriz Y' de cada iteración (con rozamiento)
 def sistema_Yprima_conrozamiento(t: float, Y: np.array) -> np.array:
 
+    v = sqrt(Y[2,0]**2 + Y[3,0]**2)
+
     # Medimos el tamaño de la matriz de entrada
     row = np.shape(Y)[0]
     col = np.shape(Y)[1]
@@ -40,8 +42,8 @@ def sistema_Yprima_conrozamiento(t: float, Y: np.array) -> np.array:
     Yprima = np.zeros((row,col),float)
     Yprima[0,0] = Y[2,0]
     Yprima[1,0] = Y[3,0]
-    Yprima[2,0] = - 4e-5*Y[2,0]*(sqrt(Y[2,0]**2 + Y[3,0]**2)) #dvx/dt = - B2*v*vx/m // v = sqrt(vx^2 + vy^2)
-    Yprima[3,0] = - g - 4e-5*Y[3,0]*(sqrt(Y[2,0]**2 + Y[3,0]**2)) #dvy/dt = -g - B2*v*vy/m
+    Yprima[2,0] = - 4e-5*Y[2,0]*(v) #dvx/dt = - B2*v*vx/m // v = sqrt(vx^2 + vy^2)
+    Yprima[3,0] = - g - 4e-5*Y[3,0]*(v) #dvy/dt = -g - B2*v*vy/m
 
     return Yprima
 
@@ -49,6 +51,7 @@ def sistema_Yprima_conrozamiento(t: float, Y: np.array) -> np.array:
 def sistema_Yprima_isoterma(t: float, Y: np.array) -> np.array:
 
     y_0 = 10e4
+    v = sqrt(Y[2,0]**2 + Y[3,0]**2)
 
     # Medimos el tamaño de la matriz de entrada
     row = np.shape(Y)[0]
@@ -58,8 +61,8 @@ def sistema_Yprima_isoterma(t: float, Y: np.array) -> np.array:
     Yprima = np.zeros((row,col),float)
     Yprima[0,0] = Y[2,0]
     Yprima[1,0] = Y[3,0]
-    Yprima[2,0] = - exp(-Y[1,0]/y_0)*4e-5*Y[2,0]*(sqrt(Y[2,0]**2 + Y[3,0]**2))
-    Yprima[3,0] = - g - exp(-Y[1,0]/y_0)*4e-5*Y[3,0]*(sqrt(Y[2,0]**2 + Y[3,0]**2))
+    Yprima[2,0] = - exp(-Y[1,0]/y_0)*4e-5*Y[2,0]*(v)
+    Yprima[3,0] = - g - exp(-Y[1,0]/y_0)*4e-5*Y[3,0]*(v)
 
     return Yprima
 
@@ -68,6 +71,7 @@ def sistema_Yprima_adiabatica(t: float, Y: np.array) -> np.array:
     
     # Valores iniciales
     a, alfa, T = 6.5e-3, 2.5, 300
+    v = sqrt(Y[2,0]**2 + Y[3,0]**2)
 
     # Medimos el tamaño de la matriz de entrada
     row = np.shape(Y)[0]
@@ -77,8 +81,8 @@ def sistema_Yprima_adiabatica(t: float, Y: np.array) -> np.array:
     Yprima = np.zeros((row,col),float)
     Yprima[0,0] = Y[2,0]
     Yprima[1,0] = Y[3,0]
-    Yprima[2,0] = - ((1-a*Y[1,0]/T)**alfa)*4e-5*Y[2,0]*(sqrt(Y[2,0]**2 + Y[3,0]**2))
-    Yprima[3,0] = - g - ((1-a*Y[1,0]/T)**alfa)*4e-5*Y[3,0]*(sqrt(Y[2,0]**2 + Y[3,0]**2))
+    Yprima[2,0] = - ((1-a*Y[1,0]/T)**alfa)*4e-5*Y[2,0]*(v)
+    Yprima[3,0] = - g - ((1-a*Y[1,0]/T)**alfa)*4e-5*Y[3,0]*(v)
 
     return Yprima
 
