@@ -83,6 +83,7 @@ def sistema_Yprima_adiabatica(t: float, Y: np.array) -> np.array:
     return Yprima
 
 def RK4_sistemas(dt: float, tmin: float, Y0: np.array, roz: bool, aproximacion=None) -> list:
+
     t = tmin
 
     # Inicializamos Y y las matrices K
@@ -234,7 +235,7 @@ def main():
     ax.grid()
     ax.set_ylabel("Altura y (km)")
     ax.set_xlabel("Alcance x (km)")
-    ax.set_title(f"Trayectorias proyectil sin rozamiento. Ángulos 30,35,40,45,50 y 55 grados.")
+    ax.set_title(f"Trayectorias proyectil sin rozamiento. Ángulos 30,35,40,45,50 y 55.")
 
     # Gráfica con rozamiento (intervalos de 5º).
     ax = fig1.add_subplot(2,2,2)
@@ -244,7 +245,7 @@ def main():
     ax.grid()
     ax.set_ylabel("Altura y (km)")
     ax.set_xlabel("Alcance x (km)")
-    ax.set_title(f"Trayectorias proyectil con rozamiento. Ángulos 30,35,40,45,50 y 55 grados.")
+    ax.set_title(f"Trayectorias proyectil con rozamiento. Ángulos 30,35,40,45,50 y 55.")
 
     # Gráfica con aproximación isoterma (intervalos de 5º).
     ax = fig1.add_subplot(2,2,3)
@@ -264,7 +265,7 @@ def main():
     ax.grid()
     ax.set_ylabel("Altura y (km)")
     ax.set_xlabel("Alcance x (km)")
-    ax.set_title(f"Trayectorias proyectil con aproximación adiabática. Ángulos 30,35,40,45,50 y 55 grados.")
+    ax.set_title(f"Trayectorias proyectil con aproximación adiabática. Ángulos 30,35,40,45,50 y 55.")
     plt.show()
 
     # Gráfica sin rozamiento (intervalos de 1º).
