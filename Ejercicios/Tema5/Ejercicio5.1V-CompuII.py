@@ -8,33 +8,28 @@ from math import *
 import numpy as np
 import matplotlib.pyplot as plt
 
-def errores(exacto: float, obtenido: float):
-    # Cálculo de los errores absoluto y relativo
-    Ea = fabs(exacto - obtenido)
-    Er = fabs(Ea/exacto)*100
-    errors = (Ea, Er)
-    return errors
-
 def uReal(x: float) -> float:
     '''Devuelve el valor real de la función en cada punto
     para comparar con los resultados numéricos al final.'''
     
     if x<1 or x>3:
         print("Valor x fuera de las condiciones de contorno.")
+    elif x == 1 or x == 3:
+        return sinh(x)
     else:
         return cosh(x)
 
-# Polinomios p(x), q(x) y r(x) de nuestra ecuación diferencial: u'' = p(x)*u' + q(x)*u + r(x) -> p(x) = 0 = r(x), q(x) = 1
+# Polinomios p(x), q(x) y r(x) de nuestra ecuación diferencial:
 def pol_p(x: float) -> float:
     p = 0
     return p
 
 def pol_q(x: float) -> float:
-    q = 1
+    q = 1-(x/5)
     return q
 
 def pol_r(x: float) -> float:
-    r = 0
+    r = x
     return r
 # --------------------------------------------
 
@@ -142,6 +137,8 @@ def sol_tridiagonales(A: np.array, b: np.array) -> np.array:
         
         # Calculamos la matriz x (Ux = z)
         x = np.zeros((brows, bcols), float)
+        print(A)
+        print(b)
         x[brows-1,0] = z[brows-1,0]/U[brows-1,brows-1]
         for i in range(brows-2,-1,-1):
             x[i,0] = (z[i,0] - d[i,0]*x[i+1,0]) / U[i,i]
@@ -162,34 +159,21 @@ def EDO_diferencias_finitas(n: int, xmin: float, xmax: float, u0: float, un: flo
     x = xmin
 
     # Creamos las matrices con los valores de p(x), q(x) y r(x) para los distintos valores de x.
-    p = np.zeros((n+2,1), float)
-    q = np.zeros((n+2,1), float)
-    r = np.zeros((n+2,1), float)
-    for i in range(n+2):
+    p = np.zeros((n,1), float)
+    q = np.zeros((n,1), float)
+    r = np.zeros((n,1), float)
+    for i in range(n):
         p[i,0] = pol_p(x)
         q[i,0] = pol_q(x)
         r[i,0] = pol_r(x)
         x = x + h
     
     # Creamos las matrices A y b del sistema Au = b
-    A = np.zeros((n+1,n+1), float)
-    b = np.zeros((n+1,1), float)
-
-    # Creamos A
-    for i in range(n+1):
-        for j in range(n+1):
-            # Ecuaciones 0 y n. Diferentes por las condiciones de frontera en función de u'
-            if i == 0 and j == 0:
-                A[i,j] = 2 + (h*h*q[i+1,0])
-            elif i == 0 and j == 1:
-                A[i,j] = -(h/2 * p[i+1,0] + 2)
-            elif i == n and j == n:
-                A[i,j] = 2 + (h*h*q[i+1,0])
-            elif i == n and j == n-1:
-                A[i,j] = (h/2 * p[i+1,0]) - 2
-
-            # Ecuaciones intermedias
-            elif i==j:
+    A = np.zeros((n-1,n-1), float)
+    b = np.zeros((n-1,1), float)
+    for i in range(n-1):
+        for j in range(n-1):
+            if i==j:
                 A[i,j] = 2 + (h*h*q[i+1,0])
             elif i-j==1:
                 A[i,j] = -(h/2 * p[i+1,0] + 1)
@@ -198,12 +182,11 @@ def EDO_diferencias_finitas(n: int, xmin: float, xmax: float, u0: float, un: flo
             else:
                 A[i,j] = 0
 
-    # Creamos b
-    for i in range(n+1):
+    for i in range(n-1):
         if i == 0:
-            b[i,0] = - 2*h*u0 - (h*h*r[i+1,0])
-        elif i==n:
-            b[i,0] = 2*h*un - (h*h*r[i+1,0])
+            b[i,0] = -(h*h*r[i+1,0]) + (h/2 * p[i+1,0] + 1)*u0
+        elif i==n-2:
+            b[i,0] = -(h*h*r[i+1,0]) - (h/2 * p[i+1,0] - 1)*un
         else:
             b[i,0] = -(h*h*r[i+1,0])
     
@@ -212,46 +195,30 @@ def EDO_diferencias_finitas(n: int, xmin: float, xmax: float, u0: float, un: flo
     return X
 
 def main():
-    intervalos = [5, 10, 20]
+    n = 10
     xmin = 1
     xmax = 3
     u0 = 1.17520
     un = 10.0178
-    
-    for n in intervalos:
-        # Cálculo de la solución numérica.
-        Solucion = EDO_diferencias_finitas(n, xmin, xmax, u0, un)
+    # Te falta cambiar cuando las condiciones están en función de u'
+    Solucion = EDO_diferencias_finitas(n, xmin, xmax, u0, un)
+    print(Solucion)
 
-        # Cálculo de la solución analítica.
-        X = np.zeros(n+1)
-        X[0] = uReal(xmin)
-        X[n] = uReal(xmax)
-        h = (xmax - xmin)/n
-        x = xmin + h
-        for i in range(1, n):
-            X[i] = uReal(x)
-            x = x + h
-
-        # Imprimimos las soluciones por pantalla
-        print(f"-------- Solución para {n} intervalos: --------")
-        print("x\tu Numérica\tu Analítica\tError absoluto.")
-        x = xmin
-        for i in range(n+1):
-            print(f"{float(x):.2}\t{Solucion[i][0]:.7}\t{X[i]:.7}\t{errores(X[i], Solucion[i][0])[0]:.7}")
-            x = x + h
-
-        print()
-
-        # Gráfica con las soluciones
-        x = np.linspace(1,3,n+1)
-        plt.plot(x, Solucion[:,0], label='Solución numérica')
-        plt.plot(x, X, label='Solución analítica')
-        plt.xlabel("Valor de x")
-        plt.ylabel("Valor de u")
-        plt.legend()
-        plt.grid()
-        plt.title(f"Soluciones para n={n}")
-        plt.show()
+    # Solución que tiene que dar.
+    h = (xmax - xmin)/n
+    x = xmin + h
+    X = np.zeros(n+1)
+    X[0] = uReal(xmin)
+    X[n] = uReal(xmax)
+    for i in range(1, n):
+        X[i] = uReal(x)
+        x = x + h
+    print(X)
 
 if __name__ == "__main__":
     main()
+            
+
+
+
+                
