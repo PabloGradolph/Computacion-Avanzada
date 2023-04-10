@@ -46,108 +46,55 @@ def sol_tridiagonales(A: np.array, b: np.array) -> np.array:
     row = np.shape(A)[0]
     col = np.shape(A)[1]
 
-    # Vamos a comprobar que la matriz A sea tridiagonal para poder continuar.
-    is_tridiagonal = True
+    # Ya tenemos todo para resolver el sistema.
+    # Definimos los 3 vectores de las 3 diagonales.
+    a = np.zeros((row,1),float)
+    c = np.zeros((row-1, 1), float)
+    d = np.zeros((row-1, 1), float)
 
-    # Todos los elementos de fuera de las 3 diagonales principales son 0.
+    # Les damos los valores
     for i in range(row):
-        if is_tridiagonal == False:
-            break
         for j in range(col):
-            if i!=j and i-j!=1 and i-j!=-1:
-                if A[i,j]!=0:
-                    is_tridiagonal = False
-                    break
-    
-    # Solo continuamos si la matriz A tiene todos los elementos de fuera de la diagonal son 0.
-    if is_tridiagonal == False:
-        print("La matriz A pasada como argumento no es tridiagonal.")
-        return A
-    else:
-        # Comprobamos la diagonal principal
-        suma = 0
-        for i in range(row):
-            suma = suma + fabs(A[i,i])
-        if suma == 0:
-            is_tridiagonal = False
+            if i==j:
+                a[i,0] = A[i,j] # Diagonal principal
+            elif i-j==1:
+                c[i-1,0] = A[i,j] # Diagonal superior
+            elif i-j==-1:
+                d[i,0] = A[i,j] # Diagonal inferior
         
-        # Comprobamos la diagonal de abajo
-        suma = 0
-        for i in range(row-1):
-            suma = suma + fabs(A[i,i+1])
-        if suma == 0:
-            is_tridiagonal = False
-        
-        # Comprobamos la diagonal de arriba
-        suma = 0
-        for i in range(row):
-            suma = suma + fabs(A[i,i-1])
-        if suma == 0:
-            is_tridiagonal = False
-    
-    if is_tridiagonal == False:
-        print("La matriz A pasada como argumento no es tridiagonal.")
-        return A
-    else:
-        # Si llegamos a este punto sabemos que la matriz A es tridiagonal.
-        # Ahora comprobamos que el número de columnas de A sea igual al número de filas de b.
-        brows = np.shape(b)[0]
-        iguales = False
-        if col == brows:
-            iguales = True
-    
-    if iguales == False:
-        print("Las filas de A no coinciden con las columnas de b.")
-        return A
-    else:
-        # Ya tenemos todo para resolver el sistema.
-        # Definimos los 3 vectores de las 3 diagonales.
-        a = np.zeros((row,1),float)
-        c = np.zeros((row-1, 1), float)
-        d = np.zeros((row-1, 1), float)
+    # Definimos las matrices L y U
+    L = np.zeros((row,col), float)
+    U = np.zeros((row,col), float)
 
-        # Les damos los valores
-        for i in range(row):
-            for j in range(col):
-                if i==j:
-                    a[i,0] = A[i,j] # Diagonal principal
-                elif i-j==1:
-                    c[i-1,0] = A[i,j] # Diagonal superior
-                elif i-j==-1:
-                    d[i,0] = A[i,j] # Diagonal inferior
+    # Les asignamos sus valores
+    U[0,0] = a[0,0]
+    L[0,0] = 1
+    for i in range(row):
+        for j in range(col):
+            if i==j and i!=0:
+                L[i,j] = 1
+                U[i,j] = a[i,0] - L[i,i-1]*d[i-1,0]
+            elif i-j == -1:
+                U[i,j] = d[i,0]
+            elif i-j == 1:
+                L[i,j] = c[i-1,0]/U[i-1,i-1]
         
-        # Definimos las matrices L y U
-        L = np.zeros((row,col), float)
-        U = np.zeros((row,col), float)
-
-        # Les asignamos sus valores
-        U[0,0] = a[0,0]
-        L[0,0] = 1
-        for i in range(row):
-            for j in range(col):
-                if i==j and i!=0:
-                    L[i,j] = 1
-                    U[i,j] = a[i,0] - L[i,i-1]*d[i-1,0]
-                elif i-j == -1:
-                    U[i,j] = d[i,0]
-                elif i-j == 1:
-                    L[i,j] = c[i-1,0]/U[i-1,i-1]
+    # Calculamos la matriz z (Lz = b)
+    brows = np.shape(b)[0]
+    bcols = np.shape(b)[1]
+    z = np.zeros((brows, bcols), float)
+    z[0,0] = b[0,0]
+    for i in range(brows):
+        z[i,0] = b[i,0] - L[i,i-1]*z[i-1,0]
         
-        # Calculamos la matriz z (Lz = b)
-        bcols = np.shape(b)[1]
-        z = np.zeros((brows, bcols), float)
-        z[0,0] = b[0,0]
-        for i in range(brows):
-            z[i,0] = b[i,0] - L[i,i-1]*z[i-1,0]
+    # Calculamos la matriz x (Ux = z)
+    x = np.zeros((brows, bcols), float)
+    x[brows-1,0] = z[brows-1,0]/U[brows-1,brows-1]
+    for i in range(brows-2,-1,-1):
+        x[i,0] = (z[i,0] - d[i,0]*x[i+1,0]) / U[i,i]
         
-        # Calculamos la matriz x (Ux = z)
-        x = np.zeros((brows, bcols), float)
-        x[brows-1,0] = z[brows-1,0]/U[brows-1,brows-1]
-        for i in range(brows-2,-1,-1):
-            x[i,0] = (z[i,0] - d[i,0]*x[i+1,0]) / U[i,i]
-        
-        # Retornamos el valor de la matriz solución 
-        return x
+    # Retornamos el valor de la matriz solución 
+    return x
 
 def EDO_diferencias_finitas(n: int, xmin: float, xmax: float, u0: float, un: float) -> np.array:
     '''Crea el sistema lineal tridiagonal a partir de una ecuación 
@@ -180,15 +127,15 @@ def EDO_diferencias_finitas(n: int, xmin: float, xmax: float, u0: float, un: flo
         for j in range(n+1):
             # Ecuaciones 0 y n. Diferentes por las condiciones de frontera en función de u'
             if i == 0 and j == 0:
-                A[i,j] = 2 + (h*h*q[i+1,0])
+                A[i,j] = 2 + (h*h*q[i,0])
             elif i == 0 and j == 1:
-                A[i,j] = -(h/2 * p[i+1,0] + 2)
+                A[i,j] = (h/2 * p[i,0]) - 2
             elif i == n and j == n:
                 A[i,j] = 2 + (h*h*q[i+1,0])
             elif i == n and j == n-1:
-                A[i,j] = (h/2 * p[i+1,0]) - 2
+                A[i,j] = -(h/2 * p[i+1,0] + 2)
 
-            # Ecuaciones intermedias
+            # Ecuaciones intermedias.
             elif i==j:
                 A[i,j] = 2 + (h*h*q[i+1,0])
             elif i-j==1:
@@ -201,9 +148,9 @@ def EDO_diferencias_finitas(n: int, xmin: float, xmax: float, u0: float, un: flo
     # Creamos b
     for i in range(n+1):
         if i == 0:
-            b[i,0] = - 2*h*u0 - (h*h*r[i+1,0])
+            b[i,0] = - 2*h*u0 - (h*h*r[i,0])
         elif i==n:
-            b[i,0] = 2*h*un - (h*h*r[i+1,0])
+            b[i,0] = 2*h*un - (h*h*r[i,0])
         else:
             b[i,0] = -(h*h*r[i+1,0])
     
@@ -233,13 +180,12 @@ def main():
             x = x + h
 
         # Imprimimos las soluciones por pantalla
-        print(f"-------- Solución para {n} intervalos: --------")
+        print(f"---------- Solución para {n} intervalos: ----------")
         print("x\tu Numérica\tu Analítica\tError absoluto.")
         x = xmin
         for i in range(n+1):
             print(f"{float(x):.2}\t{Solucion[i][0]:.7}\t{X[i]:.7}\t{errores(X[i], Solucion[i][0])[0]:.7}")
             x = x + h
-
         print()
 
         # Gráfica con las soluciones
@@ -248,7 +194,8 @@ def main():
         plt.plot(x, X, label='Solución analítica')
         plt.xlabel("Valor de x")
         plt.ylabel("Valor de u")
-        plt.legend()
+        plt.xticks(list(x))
+        plt.legend(shadow=True)
         plt.grid()
         plt.title(f"Soluciones para n={n}")
         plt.show()
