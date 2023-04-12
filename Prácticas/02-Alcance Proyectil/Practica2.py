@@ -50,7 +50,7 @@ def sistema_Yprima_conrozamiento(t: float, Y: np.array) -> np.array:
 # Devuelve la matriz Y' de cada iteración (con rozamiento y aproximación isoterma)
 def sistema_Yprima_isoterma(t: float, Y: np.array) -> np.array:
 
-    y_0 = 10e4
+    y_0 = 1e4
     v = sqrt(Y[2,0]**2 + Y[3,0]**2)
 
     # Medimos el tamaño de la matriz de entrada
