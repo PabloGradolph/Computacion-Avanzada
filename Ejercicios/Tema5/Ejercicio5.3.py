@@ -12,11 +12,11 @@ def matriz_ro(in_filas: int, in_cols:int) -> np.array:
     for i in range(in_filas):
         for j in range(in_cols):
             # Situamos la carga positiva
-            if 19 <= i <= 39 and 59 <= j <= 79:
+            if 59 <= i <= 79 and 59 <= j <= 79:
                 ro[i,j] = 1
             
             # Situamos la carga negativa
-            if 59 <= i <= 79 and 19 <= j <= 39:
+            if 19 <= i <= 39 and 19 <= j <= 39:
                 ro[i,j] = -1
     
     return ro
@@ -62,6 +62,34 @@ def Gauss_Seidel(ro: np.array, in_filas: int, in_cols:int, v_izq: float, v_der: 
     
     return V, n
 
+def campo_electrico(V: np.array) -> np.array:
+    h = 1/100
+    row = np.shape(V)[0]
+    col = np.shape(V)[1]
+
+    Ex = np.zeros((row, col)) # Matriz para el campo eléctrico en el eje x.
+    Ey = np.zeros((row, col)) # Matriz para el campo eléctrico en el eje y.
+
+    for i in range(row): # Recordamos que componente y -> i (filas)
+        for j in range(col): # Recordamos que componente x -> j (columnas)
+            # Componente y del campo eléctrico.
+            if i == 0:
+                Ey[i,j] = - (V[i+1,j]-V[i,j])/(h)
+            elif i == col-1:
+                Ey[i,j] = - (V[i,j]-V[i-1,j])/(h)
+            else:
+                Ey[i,j] = - (V[i+1,j]-V[i-1,j])/(2*h)
+            
+            # Componente x del campo eléctrico.
+            if j == 0:
+                Ex[i,j] = - (V[i,j+1]-V[i,j])/(h)
+            elif j == col-1:
+                Ex[i,j] = - (V[i,j]-V[i,j-1])/(h)
+            else:
+                Ex[i,j] = - (V[i,j+1]-V[i,j-1])/(2*h)
+
+    return Ex,Ey   
+
 def main():
     # Condiciones de contorno.
     v_izq = 0
@@ -78,29 +106,55 @@ def main():
     # Solución por métodos iterativos (Gauss-Seidel)
     ro = matriz_ro(in_filas, in_columnas)
     V, n = Gauss_Seidel(ro, in_filas, in_columnas, v_izq, v_der, v_arr, v_ab)
+    V = np.transpose(V) # Tenemos que transponer la matriz por el tema de la relación coordenadas -> índices (i,j)
     
-    # Representación gráfica de la placa
+    # Representación gráfica de la placa.
     fig, ax = plt.subplots(1,1)
-    im = ax.imshow(V, cmap='gray', extent=[0,1,0,1])
+    im = ax.imshow(V, cmap='gray', extent=[0,1,0,1], origin="lower")
     plt.colorbar(im, ax = ax)
     ax.set_title("Potencial.")
     ax.set_xlabel("x")
     ax.set_ylabel("y")
     x = np.linspace(0,1,in_columnas+1)
-    y = x*0
-    ax.plot(x,y,'k', linestyle='--', linewidth=3)
-    ax.plot(y,x,'k', linestyle='--', linewidth=3)
+    y = np.ones(in_columnas+1)
+    y = y*0.5
+    ax.plot(x,y,'k', linestyle='--', linewidth=0.5)
+    ax.plot(y,x,'k', linestyle='--', linewidth=0.5)
+    ax.set_aspect("equal", "box")
     plt.show()
 
+    # Representación de las líneas equipotenciales.
     x = np.linspace(0,1,in_columnas+1)
-    y = np.linspace(0,1,in_filas+1)
-    levels = [-0.011, -0.007, -0.002, 0.002, 0.007, 0.011]
-    cs=plt.contour(x,y,V,colors="k",levels=levels, negative_linestyles='solid')	
-    plt.clabel(cs, inline=True)
+    y = np.linspace(0,1,in_columnas+1)
+    levels = [-0.007, -0.002, 0.002, 0.007]
+    cs=plt.contour(x,y,V,colors="k", origin="lower",levels=levels, negative_linestyles='solid')	
+    plt.clabel(cs)
     plt.xlabel("x")
     plt.ylabel("y")
-    plt.xlim(-0.1,1.1)
     plt.title("Líneas equipotenciales.")
+    ejes=plt.gca()
+    ejes.set_aspect("equal", "box")
+    plt.show()
+
+    # Representación de las líneas de campo eléctrico.
+    Ex,Ey = campo_electrico(V) # Matrices completas, tenemos que coger solo algunos valores para ver bien el gráfico.
+    Ex_reducida = np.zeros((int(in_filas/5)+1, int(in_columnas/5)+1), float)
+    Ey_reducida = np.zeros((int(in_filas/5)+1, int(in_columnas/5)+1), float)
+    for i in range(in_filas):
+        for j in range(in_columnas):
+            if i%5 == 0 and j%5 == 0:
+                Ex_reducida[int(i/5),int(j/5)] = Ex[i,j]
+                Ey_reducida[int(i/5),int(j/5)] = Ey[i,j]
+    
+    # Ya están reducidas así que representamos.
+    x = np.linspace(0,1,int(in_columnas/5)+1)
+    y = np.linspace(0,1,int(in_columnas/5)+1)
+    plt.quiver(x,y,Ex_reducida,Ey_reducida)
+    plt.title("Campo eléctrico.")
+    plt.xlabel("x")
+    plt.ylabel("y")
+    ejes=plt.gca()
+    ejes.set_aspect("equal", "box")
     plt.show()
 
     print(f"Número de iteraciones: {n}")
