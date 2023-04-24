@@ -12,3 +12,7 @@
 
 # Ignora word
 *.docx
+
+# Ignora fotos
+*.png
+*.jpg
