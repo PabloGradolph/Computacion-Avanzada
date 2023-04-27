@@ -34,6 +34,7 @@ def Gauss_Seidel(in_filas: int, in_cols:int, u_izq: float, u_der: float) -> np.a
     u[0, :] = u_izq
     u[in_filas, :] = u_der
     u_arr = -15 # Esta condición es en función de la derivada pero es constante así la definimos fuera del bucle.
+    u_ab = np.zeros((in_filas+1,1), float)
 
     # Tolerancia/Epsilon
     tol = 1e-2
@@ -49,17 +50,17 @@ def Gauss_Seidel(in_filas: int, in_cols:int, u_izq: float, u_der: float) -> np.a
         norma_anterior = norm(u_old)
 
         # Actualizar la solución en los puntos interiores
-        for j in range(0, in_columnas+1):
+        for j in range(1, in_columnas):
             for i in range(1, in_filas):
-                if j == 0:
-                    u_ab = H/k * (u[i,j] - ur) # Condición de contorno de la fila 0.
-                    u[i,j] = 0.25*(2*u[i,j+1] + u[i-1,j] + u[i+1,j] - (h*h*Q/(k*d) + 2*h*u_ab))
-                elif j == in_columnas:
-                    u[i,j] = 0.25*(2*u[i,j-1] + u[i-1,j] + u[i+1,j] - (h*h*Q/(k*d) - 2*h*u_arr))
-                else:
-                    u[i,j] = 0.25*(u[i-1,j] + u[i,j-1] + u[i,j+1] + u[i+1,j] - h*h*Q/(k*d))
+                u[i,j] = 0.25*(u[i-1,j] + u[i,j-1] + u[i,j+1] + u[i+1,j] - h*h*Q/(k*d))
 
-        # Aplicar las condiciones de frontera
+        # Aplicar las condiciones de frontera (tener en cuenta que la matriz está traspuesta)
+        u_ab[:,0] = H/k * (u[:, 1] - ur)
+        u[1:-1, in_columnas] = 0.25*(2*u[1:-1, -2] + u[:-2, in_columnas] + u[2:, in_columnas] - (h*h*Q/(k*d) - 2*h*u_arr))
+        u[1:-1, 0] = 0.25*(2*u[1:-1, 1] + u[:-2, 0] + u[2:, 0] - (h*h*Q/(k*d) + 2*h*u_ab[1:-1,0]))
+        u[0, :] = u_izq
+        u[in_filas, :] = u_der
+
         norma = norm(u)
         n += 1
         if n > max_iterations:

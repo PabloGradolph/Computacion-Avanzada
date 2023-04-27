@@ -2,6 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 from math import *
 
+# 6000 y pico iteraciones.
+# ----------------------------------------------------------
+# u_ab[:,0] = H/k * (u[:, 1] - ur)
+# u[1:-1, in_columnas] = 0.25*(2*u[1:-1, -2] + u[:-2, in_columnas] + u[2:, in_columnas] - (h*h*Q/(k*d) - 2*h*u_arr))
+# u[1:-1, 0] = 0.25*(2*u[1:-1, 1] + u[:-2, 0] + u[2:, 0] - (h*h*Q/(k*d) + 2*h*u_ab[1:-1,0]))
+# u[0, :] = u_izq
+# u[in_filas, :] = u_der
+# ----------------------------------------------------------
+
 # Definir las dimensiones de la placa
 Lx = 9 # ancho (cm)
 Ly = 5 # alto (cm)
