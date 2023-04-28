@@ -17,7 +17,7 @@ def Gauss_Seidel(in_filas: int, in_cols:int, u_izq: float, u_der: float, tol: fl
     in_filas = in_cols 
 
     # Matriz solución
-    u = np.zeros((in_filas+1, in_columnas+1)) # Matriz orientada en vertical.
+    u = np.zeros((in_filas, in_columnas), float) # Matriz orientada en vertical.
 
     # Iteraciones.
     max_iterations = 20000
@@ -33,9 +33,9 @@ def Gauss_Seidel(in_filas: int, in_cols:int, u_izq: float, u_der: float, tol: fl
 
     # Establecemos los valores de contorno. (La matriz está transpuesta)
     u[0, :] = u_izq
-    u[in_filas, :] = u_der
+    u[in_filas-1, :] = u_der
     u_arr = -15 # Esta condición es en función de la derivada pero es constante así la definimos fuera del bucle.
-    u_ab = np.zeros((in_filas+1,1), float) # Esta matriz de una columna la utilizaremos para guardar las condiciones de frontera del límite inferior.
+    u_ab = np.zeros((in_filas,1), float) # Esta matriz de una columna la utilizaremos para guardar las condiciones de frontera del límite inferior.
 
     # Bucle while hasta que la diferencia de las normas esté por debajo de la tolerancia.
     norma = norm(u)
@@ -48,16 +48,16 @@ def Gauss_Seidel(in_filas: int, in_cols:int, u_izq: float, u_der: float, tol: fl
         norma_anterior = norm(u_old)
 
         # Actualizar la solución en los puntos interiores
-        for j in range(1, in_columnas):
-            for i in range(1, in_filas):
+        for j in range(1, in_columnas-1):
+            for i in range(1, in_filas-1):
                 u[i,j] = 0.25*(u[i-1,j] + u[i,j-1] + u[i,j+1] + u[i+1,j] - h*h*Q/(k*d))
 
         # Aplicar las condiciones de frontera (tener en cuenta que la matriz está traspuesta)
         u_ab[:,0] = H/k * (u[:, 1] - ur)
-        u[1:-1, in_columnas] = 0.25*(2*u[1:-1, -2] + u[:-2, in_columnas] + u[2:, in_columnas] - (h*h*Q/(k*d) - 2*h*u_arr))
+        u[1:-1, in_columnas-1] = 0.25*(2*u[1:-1, -2] + u[:-2, in_columnas-1] + u[2:, in_columnas-1] - (h*h*Q/(k*d) - 2*h*u_arr))
         u[1:-1, 0] = 0.25*(2*u[1:-1, 1] + u[:-2, 0] + u[2:, 0] - (h*h*Q/(k*d) + 2*h*u_ab[1:-1,0]))
         u[0, :] = u_izq
-        u[in_filas, :] = u_der
+        u[in_filas-1, :] = u_der
 
         # -----------------------------------------------------------------------------------------
         # OTRA VERSIÓN DEL ALGORITMO CON EL QUE OBTENEMOS LO MISMO: Algo más lenta.
@@ -100,7 +100,6 @@ def main():
         u, n = Gauss_Seidel(in_filas, in_cols, u_izq, u_der, tol)
         final = time.time()
         u = np.transpose(u)
-        np.savetxt("matriz.txt", u, fmt="%5.2f")
 
         # Representación gráfica de la placa.
         fig, ax = plt.subplots(1,1)
@@ -113,8 +112,8 @@ def main():
         plt.show()
 
         # Representación de las líneas isotermas de la placa.
-        x = np.linspace(0,9,in_cols+1)
-        y = np.linspace(0,5,in_filas+1)
+        x = np.linspace(0,9,in_cols)
+        y = np.linspace(0,5,in_filas)
         cs=plt.contour(x,y,u,cmap='coolwarm', origin='lower', negative_linestyles='solid')	
         plt.clabel(cs)
         plt.xlabel("x")
@@ -131,12 +130,12 @@ def main():
             i = int(in_filas/2) 
             j = int(in_cols/2)
             punto_central = u[i,j]
-            punto_central_superior = u[in_filas,j]
+            punto_central_superior = u[in_filas-1,j]
             punto_central_inferior = u[0, j]
         else: # En el caso par tenemos que hacer una interpolación.
             i = int(in_filas/2) 
             j = int(in_cols/2)
-            
+
             # Tenemos 4 puntos centrales de los que sacaremos el valor medio.
             punto_central_1 = u[i,j-1]
             punto_central_2 = u[i,j]
@@ -147,8 +146,8 @@ def main():
             punto_central = (centro_1_2 + centro_3_4)/2
 
             # Tenemos dos puntos centrales superiores y dos inferiores.
-            punto_central_superior_1 = u[in_filas,j-1]
-            punto_central_superior_2 = u[in_filas,j]
+            punto_central_superior_1 = u[in_filas-1,j-1]
+            punto_central_superior_2 = u[in_filas-1,j]
             punto_central_superior = (punto_central_superior_1 + punto_central_superior_2)/2
             punto_central_inferior_1 = u[0, j-1]
             punto_central_inferior_2 = u[0, j]
@@ -156,22 +155,22 @@ def main():
 
         # Imprimimos los resultados.
         print("CONVERGENCIA:")
+        print(f" - Tolerancia: {tol}")
         print(f" - Número de iteraciones: {n}")
         print(f" - Tiempo de ejecución (s): {final-inicio:.5f}")
         print()
         print("RESULTADOS NUMÉRICOS:")
-        print(f" - Temperatura en el centro de la placa: {punto_central}ºC")
-        print(f" - Temperatura en el centro superior de la placa: {punto_central_superior}ºC")
-        print(f" - Temperatura en el centro inferior de la placa: {punto_central_inferior}ºC")
+        print(f" - Temperatura en el centro de la placa: {punto_central:.5f}ºC")
+        print(f" - Temperatura en el centro superior de la placa: {punto_central_superior:.5f}ºC")
+        print(f" - Temperatura en el centro inferior de la placa: {punto_central_inferior:.5f}ºC")
         print()
 
         in_filas += 25
         in_cols += 45
-        if loop == 2: # Volvemos a representar las mallas anteriores cambiando la tolerancia
+        if loop == 3: # Volvemos a representar las mallas anteriores cambiando la tolerancia
             in_filas = 25
             in_cols = 45
             tol = 1e-3
-    
     
 if __name__ == "__main__":
     main()
