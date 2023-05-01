@@ -20,7 +20,7 @@ def Gauss_Seidel(in_filas: int, in_cols:int, u_izq: float, u_der: float, tol: fl
     u = np.zeros((in_filas, in_columnas), float) # Matriz orientada en vertical.
 
     # Iteraciones.
-    max_iterations = 50000
+    max_iterations = 20000
     n = 0
 
     # Cálculo de h
@@ -95,7 +95,7 @@ def main():
     # Tolerancia
     tol = 1e-2
 
-    for loop in range(8): # Podemos poner range(8) para hacer los casos 100x180 pero lleva bastante tiempo y cálculo del ordenador.
+    for loop in range(6): # Podemos poner range(8) para hacer los casos 100x180 pero lleva bastante tiempo y cálculo del ordenador.
         print(f"-------------{in_filas}x{in_cols}----------------")
         
         # Obtención de la matriz u que representa la placa con las temperaturas.
@@ -170,7 +170,7 @@ def main():
 
         in_filas += 25
         in_cols += 45
-        if loop == 3: # Volvemos a representar las mallas anteriores cambiando la tolerancia (cambiar a 3 si ponemos el bucle como range(8))
+        if loop == 2: # Volvemos a representar las mallas anteriores cambiando la tolerancia (cambiar a 3 si ponemos el bucle como range(8))
             in_filas = 25
             in_cols = 45
             tol = 1e-3
