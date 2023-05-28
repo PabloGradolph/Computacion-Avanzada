@@ -38,7 +38,7 @@ def paseo_aleatorio(n: int, pasos: int, long1:bool=True) -> list:
                 x_old, y_old = x, y
                 theta = uniform(0, 2*pi) # Cálculo del ángulo.
                 r = uniform(0.5, 2) # Cálculo de la longitud del paso.
-                x, y = x_old + r*cos(theta), y_old + r*sin(theta) # La longitud es 1.
+                x, y = x_old + r*cos(theta), y_old + r*sin(theta) # La longitud no es 1.
                 r2 = x*x + y*y
                 paseo.append((x,y,r2))
             
