@@ -42,45 +42,38 @@ Python es un lenguaje de programación interpretado, multiplataforma y de códig
  - 4.3 Cáclulo de órbitas planetarias.
  - 4.4 Precesión del perihelio de la óbita de Mercurio.
  
- <h3 align="center">Bloque 5: Caos en el péndulo físico. Transformadas de Fourier</h3>
+ <h3 align="center">Bloque 5: Ecuaciones en derivadas parciales (EDPs)</h3>
  
- - 5.1 Péndulo simple y péndulo físico.
- - 5.2 Aparición del caos; atractores y diagramas de Poincaré.
- - 5.3 Transformada de Fourier: métodos espectrales.
- - 5.4 Caos examinado en el domino de frecuencias.
- 
- <h3 align="center">Bloque 6: Ecuaciones en derivadas parciales (EDPs)</h3>
- 
- - 6.1 Método de las diferencias finitas.
- - 6.2 EDPs elípticas: distribución de temperaturas en equilibrio.
- - 6.3 Ecuaciones de Laplace y Poisson: el potencial eléctrico.
- - 6.4 Geometrías irregulares o no rectangulares.
- - 6.5 Condiciones de Neumann.
+ - 5.1 Método de las diferencias finitas.
+ - 5.2 EDPs elípticas: distribución de temperaturas en equilibrio.
+ - 5.3 Ecuaciones de Laplace y Poisson: el potencial eléctrico.
+ - 5.4 Geometrías irregulares o no rectangulares.
+ - 5.5 Condiciones de Neumann.
 
- <h3 align="center">Bloque 7: EDPs parabólicas e hiperbólicas</h3>
+ <h3 align="center">Bloque 6: EDPs parabólicas e hiperbólicas</h3>
  
- - 7.1 La ecuación del calor en una dimensión.
- - 7.2 Métodos explícitos e implícitos.
- - 7.3 La ecuación de ondas en una dimensión.
- - 7.4 Problemas en más de una dimensión espacial.
+ - 6.1 La ecuación del calor en una dimensión.
+ - 6.2 Métodos explícitos e implícitos.
+ - 6.3 La ecuación de ondas en una dimensión.
+ - 6.4 Problemas en más de una dimensión espacial.
 
- <h3 align="center">Bloque 8: Métodos Estocásticos</h3>
+ <h3 align="center">Bloque 7: Métodos Estocásticos</h3>
  
- - 8.1 Paseos aleatorios y difusión.
- - 8.2 Entropía y la flecha del tiempo.
- - 8.3 Modelos de crecimiento de agregados.
- - 8.4 Fractales.
+ - 7.1 Paseos aleatorios y difusión.
+ - 7.2 Entropía y la flecha del tiempo.
+ - 7.3 Modelos de crecimiento de agregados.
+ - 7.4 Fractales.
 
- <h3 align="center">Bloque 9: El Método de Montecarlo</h3>
+ <h3 align="center">Bloque 8: El Método de Montecarlo</h3>
  
- - 9.1 Modelo de Ising y teoría del Campo Medio.
- - 9.2 Simulación de Monte Carlo; algoritmo de Metropolis.
- - 9.3 Transición de fase de segundo orden en el modelo de Ising.
- - 9.4 Transición de fase de primer orden en el modelo de Ising.
+ - 8.1 Modelo de Ising y teoría del Campo Medio.
+ - 8.2 Simulación de Monte Carlo; algoritmo de Metropolis.
+ - 8.3 Transición de fase de segundo orden en el modelo de Ising.
+ - 8.4 Transición de fase de primer orden en el modelo de Ising.
   
 <h2>Información Adicional: ℹ️</h2>
 
-✏️ Temario: En la carpeta temario encontrarás todos los programas planteados durante el curso como contenidos del curso.
+✏️ Temario: En la carpeta temario encontrarás todos los programas y documentos teóricos del curso.
 
 🏋🏻 Ejercicios: En la carpeta ejercicios encontrarás los ejercicios planteados y entregados durante el curso.
 
